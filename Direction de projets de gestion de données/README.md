@@ -1,8 +1,5 @@
 # wildfire-fs-project
 
-
-Presentation Google Slides
-
 Description
 Wildfire Detection is an application designed to help users identify and report wildfires quickly. Our application uses state-of-the-art computer vision and data analysis techniques to detect fire and smoke in images, providing crucial information to emergency services.
 
