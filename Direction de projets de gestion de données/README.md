@@ -1,12 +1,11 @@
 # wildfire-fs-project
 
-Description
-Wildfire Detection is an application designed to help users identify and report wildfires quickly. Our application uses state-of-the-art computer vision and data analysis techniques to detect fire and smoke in images, providing crucial information to emergency services.
+Description: Wildfire Detection is an application designed to help users identify and report wildfires quickly. Our application uses state-of-the-art computer vision and data analysis techniques to detect fire and smoke in images, roviding crucial information to emergency services.
 
-Features
 File Upload: Users can upload images containing potential wildfire scenes.
 Camera Input: Users can use their phone's camera to capture and analyze images in real-time.
 Fire and Smoke Detection: Our application uses a custom-trained YOLOv8 model to detect fire and smoke in images.
+
 Geolocation: If available, the application displays the GPS coordinates of the image, helping emergency services locate the fire.
 Weather Information: Users can access weather data related to the detected fire's location, including wind speed and direction.
 User-Friendly Interface: The user interface is simple and intuitive, making it easy for anyone to use.
@@ -21,7 +20,7 @@ link to download the dataset : https://drive.google.com/drive/folders/1oNRu0h1sX
 link to download the best model PyTorch (best.pt) : https://drive.google.com/drive/folders/10BBB7h6iRx9Mb9ChAf-tJ4LAD6nj53WE?usp=sharing
 
 Wildfire Detection Application
-Final project of data fullstack JEDHA's bootcamp BLOC 6
+
 
 Prerequisites
 Python 3.7 or higher
