@@ -7,7 +7,7 @@ link project presentation with video demonstration : https://www.canva.com/desig
 
 📌 Project Objective
 
-This project aims to predict solar radiation using time series data. By leveraging historical weather patterns and atmospheric conditions, we build a predictive model to forecast solar radiation levels accurately.
+This project aims to predict solar radiation using time series data. By leveraging historical weather patterns and atmospheric conditions (scrapping), we build a predictive model to forecast solar radiation levels accurately.
 
 🛠 Tech Stack
 
