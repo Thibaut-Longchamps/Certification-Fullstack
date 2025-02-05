@@ -1,3 +1,6 @@
+Merci de télécharger le fichier ATC_Final_notebook (1) pour consulter le code des models (La lecture ne fonctionne pas sur Github)
+
+______________________________________________________________________________________________________________________________________________________________________________
 
 Ressources :
 
