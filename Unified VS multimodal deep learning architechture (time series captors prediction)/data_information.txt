@@ -1,0 +1,136 @@
+# MovePort Dataset – Data Information
+
+This is the open access **MovePort dataset** published with our paper:  
+*"MovePort: Multimodal Dataset of EMG, IMU, MoCap and Insole Pressure for Analyzing Abnormal Movements and Postures in Rehabilitation Training"*  
+
+**Please cite this article when using the dataset.**
+
+---
+
+## Part 1 – File Structure
+
+Data is stored in the `data/` folder with the following structure:
+
+data/
+├─ 1
+│ └─ ...
+├─ 2
+│ └─ ...
+...
+└─ 25
+├─ back
+├─ forward
+├─ halfsquat
+├─ still
+├─ ground_gait # Only for the subject with spastic paraplegia
+├─ treadmill_normal
+├─ treadmill_leghigh
+└─ treadmill_dragging
+
+
+- Each folder `1-25` represents a participant.
+
+---
+
+## Part 2 – Experimental Paradigm
+
+### Experiment 1 – Treadmill Gaits
+- **Normal Gait (`treadmill_normal`)**: 3 speeds  
+  - Low Speed: 1 km/h  
+  - Medium Speed: 2 km/h  
+  - High Speed: 3–4 km/h (participant chosen)  
+- **Dragging Gait (`treadmill_dragging`)**: Simulates difficulty lifting legs, 1 km/h  
+- **High Leg Lift Gait (`treadmill_leghigh`)**: Simulates exaggerated leg lifts, 2 km/h  
+
+### Experiment 2 – Ground Postures
+- **Standing still (`still`)** – standard standing  
+- **Forward Lean (`forward`)** – forward-weighted posture  
+- **Backward Lean (`back`)** – backward-weighted posture  
+- **Half Squat (`halfsquat`)** – half-squat position  
+
+---
+
+## Part 3 – Data Files
+
+- Naming format: `modality_SegmentIndex.csv` / `.avi`  
+- Modalities: EMG, IMU, IPS, COP, MoCap  
+
+### 1. Electromyography (EMG)
+- Modality: `emg`  
+- Data Size: 16 × nframe  
+- Sampling Rate: 2000 Hz  
+- Unit: Microvolts  
+- Muscles (L/R):  
+  - Vlat – Vastus Lateralis  
+  - RF – Rectus Femoris  
+  - ST – Semitendinosus  
+  - TA – Tibialis Anterior  
+  - MG – Medial Gastrocnemius  
+  - LG – Lateral Gastrocnemius  
+  - SOL – Soleus  
+  - IL – Iliopsoas  
+
+### 2. Inertial Measurement Unit (IMU)
+- Modality: `imu`  
+- Data Size: 54 × nframe  
+- Sampling Rate: 100 Hz  
+- Units: Acceleration (m/s²), Angular Velocity (°/s), Euler Angles (°)  
+- Positions: Head, Waist, L/R Hand, L/R Foot  
+- Axes: Acc_X/Y/Z, Gyr_X/Y/Z, Roll, Pitch, Yaw  
+
+### 3. Insole Pressure Sensors (IPS)
+- Modality: `ips`  
+- Data Size: 682 × nframe  
+- Sampling Rate: 60 Hz  
+- Unit: psi  
+- Notes: 2 electrode arrays per foot (31×11), 230 active electrodes, others = 0  
+
+#### Center of Pressure (COP)
+- Data Size: 6 × nframe  
+- Units: N, m  
+- Columns: L/R_Force, L/R_cop_x, L/R_cop_y  
+- Note: Coordinate system consistent with MoCap
+
+### 4. Motion Capture (MoCap)
+- Modality: `mocap`  
+- Data Size: 78 × nframe  
+- Sampling Rate: 100 Hz  
+- Unit: meters  
+- 26 markers (x/y/z coordinates):
+
+| Marker | Location Description |
+|--------|--------------------|
+| IJ     | Jugular Notch (above sternum, between clavicles) |
+| C7     | 7th cervical vertebra |
+| RA     | Right Acromion |
+| LA     | Left Acromion |
+| T8     | 8th thoracic vertebra |
+| R_LHE  | Right Elbow Joint, outside |
+| R_RS   | Right Wrist Joint, outside |
+| L_LHE  | Left Elbow Joint, outside |
+| L_RS   | Left Wrist Joint, outside |
+| M_PSIS | Posterior Superior Iliac Spine |
+| R_IAS  | Right Anterior Superior Iliac Spine |
+| R_FTC  | Right Greater Trochanter |
+| L_IAS  | Left Anterior Superior Iliac Spine |
+| L_FTC  | Left Greater Trochanter |
+| R_FLE  | Right Knee Joint, outside |
+| R_FME  | Right Knee Joint, inside |
+| R_TTC  | Right Tibial Plateau |
+| R_LM   | Right Ankle Joint, outside |
+| R_CAL  | Right Heel |
+| R_MH1  | 1st toe of right foot |
+| L_FLE  | Left Knee Joint, outside |
+| L_FME  | Left Knee Joint, inside |
+| L_TTC  | Left Tibial Plateau |
+| L_LM   | Left Ankle Joint, outside |
+| L_CAL  | Left Heel |
+| L_MH1  | 1st toe of left foot |
+
+---
+
+## Missing Data
+- Participants 18, 19, 20, 24: Forward lean posture missing  
+- Participant 21: Forward lean and treadmill normal low-speed missing  
+- Participant 22: Backward lean missing  
+- Participant 23: Forward lean and half-squat missing
