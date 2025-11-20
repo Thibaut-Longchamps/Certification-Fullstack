@@ -13,6 +13,7 @@ This project addresses two business needs:
 2. **Predicting the optimal daily rental price** using machine learning.
 
 ---
+
 # Create and activate virtual environment
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
@@ -22,9 +23,7 @@ pip install -r api/requirements.txt
 pip install -r training/requirements.txt
 pip install -r ml_flow/requirements.txt
 
-
-
-
+---
 
 ## 🧠 Machine Learning Model
 
@@ -35,30 +34,31 @@ pip install -r ml_flow/requirements.txt
 
 ### 🔁 To regenerate the model
 
-\`\`\`bash
+```bash
 jupyter notebook notebooks/ml_model.ipynb
-\`\`\`
+```
 
 This creates the file:
 
-\`\`\`text
+```text
 ml_best_model.pkl
-\`\`\`
+```
 
 ### 📦 Load the model manually
 
-\`\`\`python
+```python
 import pickle
 
 with open("ml_best_model.pkl", "rb") as f:
     model = pickle.load(f)
-\`\`\`
+```
 
 ---
 
 ## 🗂️ Project Structure
 
-\`\`\`
+```text
+.
 notebooks/
 ├── 01_preprocessing_delay.ipynb       # EDA - delay
 ├── 02_preprocessing_pricing.ipynb     # EDA - pricing
@@ -83,7 +83,7 @@ api/
 ├── app.py                             # FastAPI app
 ├── Dockerfile
 └── requirements.txt
-\`\`\`
+```
 
 ---
 
@@ -106,14 +106,14 @@ Set these variables in your \`.env\` or Docker environment.
 
 ### ✅ Example
 
-\`\`\`env
+```env
 AWS_ACCESS_KEY_ID=your_key
 AWS_SECRET_ACCESS_KEY=your_secret
 BACKEND_STORE_URI=postgresql://user:pass@host:5432/mlflow
 ARTIFACT_STORE_URI=s3://your-bucket-name/path/
 MLFLOW_TRACKING_URI=https://your-mlflow.herokuapp.com
 PORT=4000
-\`\`\`
+```
 
 ---
 
@@ -121,11 +121,11 @@ PORT=4000
 
 ### ▶️ 1. Streamlit Dashboard
 
-\`\`\`bash
+```bash
 cd cake_app
 docker build . -t getaround_streamlit
 docker run -p 8501:80 -v "\$(pwd):/home/app" getaround_streamlit
-\`\`\`
+```
 
 🔗 Open: http://localhost:8501  
 📂 Upload \`clean_file_delay.csv\` for visualization.
@@ -134,7 +134,7 @@ docker run -p 8501:80 -v "\$(pwd):/home/app" getaround_streamlit
 
 ### ▶️ 2. MLflow Tracking Server
 
-\`\`\`bash
+```bash
 cd ml_flow
 docker build . -t getaround_mlflow
 
@@ -145,7 +145,7 @@ docker run -p 5000:80 -v "\$(pwd):/home/app" \
   -e BACKEND_STORE_URI=your_postgres_uri \
   -e ARTIFACT_STORE_URI=your_s3_uri \
   getaround_mlflow
-\`\`\`
+```
 
 🔗 Open: http://localhost:5000
 
@@ -153,7 +153,7 @@ docker run -p 5000:80 -v "\$(pwd):/home/app" \
 
 ### ▶️ 3. FastAPI (Price Prediction API)
 
-\`\`\`bash
+```bash
 cd api
 docker build . -t getaround_api
 
@@ -165,7 +165,7 @@ docker run -p 4000:80 -v "\$(pwd):/home/app" \
   -e BACKEND_STORE_URI=your_postgres_uri \
   -e ARTIFACT_STORE_URI=your_s3_uri \
   getaround_api
-\`\`\`
+```
 
 🔗 API Access: http://localhost:4000  
 📄 Docs UI: http://localhost:4000/docs
@@ -174,7 +174,7 @@ docker run -p 4000:80 -v "\$(pwd):/home/app" \
 
 ##  Example Prediction Request
 
-\`\`\`json
+```json
 POST /predict
 {
   "model_key": "Citroën",
@@ -191,7 +191,7 @@ POST /predict
   "has_speed_regulator": false,
   "winter_tires": false
 }
-\`\`\`
+```
 
 ---
 
@@ -251,4 +251,5 @@ According to this data, it is not necessary to set a maximum period between rent
 **Thibaut Longchamps**  
 🔗 [GitHub](https://github.com/Thibaut-Longchamps)
 EOF
+
 
