@@ -1,128 +1,211 @@
-# wildfire-fs-project
+# 🔥 Wildfire-FS – Fire & Smoke Detection Assistant
 
-Description: Wildfire Detection is an application designed to help users identify and report wildfires quickly. Our application uses state-of-the-art computer vision and data analysis techniques to detect fire and smoke in images, roviding crucial information to emergency services.
+Wildfire-FS is a computer vision application designed to detect fire and smoke in images and help users quickly report potential wildfires.
+It combines a YOLOv8 model, geolocation, and weather data to provide useful context to emergency services.
+---
+## Project Overview
 
-File Upload: Users can upload images containing potential wildfire scenes.
-Camera Input: Users can use their phone's camera to capture and analyze images in real-time.
-Fire and Smoke Detection: Our application uses a custom-trained YOLOv8 model to detect fire and smoke in images.
+This project provides an end-to-end pipeline for **wildfire detection**:
 
-Geolocation: If available, the application displays the GPS coordinates of the image, helping emergency services locate the fire.
-Weather Information: Users can access weather data related to the detected fire's location, including wind speed and direction.
-User-Friendly Interface: The user interface is simple and intuitive, making it easy for anyone to use.
-Getting Started
-To get started with Wildfire Detection on your local machine, follow these steps:
+A backend API serving a custom-trained YOLOv8 model (fire & smoke detection).
+A Streamlit frontend that lets users:
 
-[API with our trained YOLOv8 model](https://wildfire-project-backend.herokuapp.com)\ == (disabled)
-[Streamlit app with our integrated fire&smoke detector for emergency services](https://wildfire-project-streamlit.herokuapp.com/) == (disabled)
+- upload images,
+- capture images from their phone (via browser),
+- visualize detections.
 
-link to download the dataset : https://drive.google.com/drive/folders/1oNRu0h1sXO5HsZAXp5kkHgl7SdTRb4zz?usp=sharing
+Optional geolocation & weather information for the detected fire location.
 
-link to download the best model PyTorch (best.pt) : https://drive.google.com/drive/folders/10BBB7h6iRx9Mb9ChAf-tJ4LAD6nj53WE?usp=sharing
+A simple UX so the tool can be used by non-technical users (citizens, emergency operators).
 
-Wildfire Detection Application
+🌐 Deployed apps (Heroku) are currently disabled, but links are kept for reference.
 
+API with YOLOv8 model (disabled):
+```bash
+https://wildfire-project-backend.herokuapp.com
+```
+Streamlit app for emergency services (disabled):
+```bash
+https://wildfire-project-streamlit.herokuapp.com/
+```
+---
+## 🎯 Objectives
 
-Prerequisites
-Python 3.7 or higher
-pip (Python package manager)
-Docker (optional)
-Installation
-Clone the repository to your local machine:
+Detect fire and smoke automatically from images using a YOLOv8 model.
+Support emergency services with:
 
-git clone https://github.com/carolinemathius/wildfire-fs-project.git
-cd wildfire-fs-project
-Set up the frontend and backend environments:
+- approximate location (GPS coordinates, when available),
+- relevant weather information (wind, etc.).
+- Provide a simple, user-friendly interface that works from desktop or mobile.
 
-Frontend:
+Showcase an end-to-end Computer Vision project (data → model → API → frontend).
 
-cd frontend
-pip install -r requirements.txt
-Backend:
+---
 
+## Model & Dataset
+
+Model: custom-trained YOLOv8 object detector
+
+Classes: typically **fire**, **smoke**, **background**
+
+---
+
+## Dataset: D-Fire Dataset
+
+Built by: Pedro Vinícius Almeida Borges de Venâncio, Adriano Chaves Lisboa, Adriano Vilela Barbosa
+
+Paper: “An automatic fire detection system based on deep convolutional neural networks for low-power, resource-constrained devices”, Neural Computing and Applications (2022).
+
+---
+
+## Downloads
+
+📁 Dataset (D-Fire subset used in the project):
+```bash
+https://drive.google.com/drive/folders/1oNRu0h1sXO5HsZAXp5kkHgl7SdTRb4zz?usp=sharing
+```
+---
+
+## Best PyTorch YOLOv8 model (best.pt):
+```bash
+https://drive.google.com/drive/folders/10BBB7h6iRx9Mb9ChAf-tJ4LAD6nj53WE?usp=sharing
+```
+---
+
+## Key Features
+
+- Image Upload
+- Upload pictures containing potential wildfire scenes.
+- Camera Input
+- Capture and analyze images directly from your phone or laptop camera.
+- Fire & Smoke Detection
+
+Inference using a YOLOv8 model trained on wildfire datasets.
+Bounding boxes and labels displayed on the image.
+Geolocation (if available)
+
+Read / display GPS coordinates associated with the image.
+Useful to localize the fire for emergency services.
+
+---
+
+## Tech Stack
+
+Language Python 3.7+
+
+Computer Vision & ML YOLOv8 (PyTorch-based)
+OpenCV / PIL (for image handling – depending on implementation)
+
+Backend
+Python API (api.py) – e.g. FastAPI/Flask (depending on your implementation)
+Exposes an endpoint to run YOLOv8 inference on images
+
+Frontend
+Streamlit app (streamlit.py)
+Infrastructure
+Docker (optional, for containerized deployment)
+
+(Previously) Heroku for deployment of:
+
+Backend API
+Streamlit frontend
+
+---
+
+🗂️ Project Structure
+```text
+wildfire-fs-project/
+├── backend/
+│   ├── api.py                # Backend API serving YOLOv8 model
+│   └── requirements.txt      # Backend dependencies
+│
+├── frontend/
+│   ├── streamlit.py          # Streamlit UI (upload, camera, display results)
+│   └── requirements.txt      # Frontend dependencies
+│
+├── Dockerfile                # (Optional) Docker configuration (if monolithic)
+├── README.md                 # This file
+└── ...                       # Other project files, configs, notebooks, etc.
+```
+---
+
+## 🚀 Getting Started (Local)
+✅ Prerequisites
+
+Python 3.7+
+pip
+
+---
+
+## Docker
+
+### 1️⃣ Clone the Repository
+```bash
+git clone [https://github.com/carolinemathius/wildfire-fs-project.git](https://github.com/Thibaut-Longchamps/Certification-Fullstack/tree/main/Direction%20de%20projets%20de%20gestion%20de%20donn%C3%A9es)
+cd wild fire project
+```
+
+### 2️⃣ Create a Virtual Environment
+```bash
+python -m venv venv
+```
+# macOS / Linux
+```bash
+source venv/bin/activate
+```
+# Windows
+```bash
+venv\Scripts\activate
+```
+
+### 3️⃣ Install Dependencies
+```bash
 cd backend
+pip install --upgrade pip
 pip install -r requirements.txt
-Usage
-Start the backend server:
+```
+Frontend
+```bash
+cd ../frontend
+pip install --upgrade pip
+pip install -r requirements.txt
+```
 
+---
+
+## Local Usage
+
+### ▶️ 1. Start the Backend API
+
+From the backend/ folder:
+```bash
 cd backend
-python api.py
-The API server will be running at http://localhost:4001.
+docker build -t wildfire-backend .
+docker run -d --name wildfire-backend -p 4001:4001 wildfire-backend
+```
+The API should be available at:
+```bash
+http://localhost:4001 (according to the project setup)
+```
+This service handles YOLOv8 inference on images (upload/call from Streamlit).
 
-Start the frontend application:
+### ▶️ 2. Start the Streamlit Frontend
 
-cd frontend
-streamlit run streamlit.py
-The Streamlit application will open in your web browser.
+From the frontend/ folder:
+```bash
+cd ../frontend
+docker build -t wildfire-frontend .
+docker run -d --name wildfire-frontend -p 8501:8501 wildfire-frontend
+```
 
-Use the application to upload images or capture images with your phone's camera for wildfire detection.
+## Authors
 
-Contributing
-We welcome contributions from the community! If you'd like to contribute to this project, please follow these guidelines:
+- Anas Maghous
+- Caroline Mathius
+- Simon Picard
+- Thibaut Longchamps
 
-Fork the repository on GitHub.
-Clone your forked repository to your local machine.
-Make your changes and test them thoroughly.
-Create a pull request with a clear description of your changes.
-Authors
-Anas Maghous
-Caroline Mathius
-Simon Picard
-Thibaut Longchamps
-Acknowledgments
-We would like to thank the open-source community for providing the tools and libraries that made this project possible.
+## 📚 About
 
-References
-We used the D-Fire Dataset, built by: Pedro Vinícius Almeida Borges de Venâncio, Adriano Chaves Lisboa, Adriano Vilela Barbosa: An automatic fire detection system based on deep convolutional neural networks for low-power, resource-constrained devices. In: Neural Computing and Applications, 2022.
+This project was developed as part of BLOC 6 – Jedha Certification (Wildfire Detection Project).
 
-API with our trained YOLOv8 model
-Streamlit app with our integrated fire&smoke detector for emergency services
-
-About
-BLOC 6_Jedha Certification
-
-Resources
- Readme
- Activity
-Stars
- 0 stars
-Watchers
- 1 watching
-Forks
- 0 forks
-Report repository
-Releases
-No releases published
-Create a new release
-Packages
-No packages published
-Publish your first package
-Contributors
-4
-@psimon1
-psimon1 Simon P
-@Anasmgs
-Anasmgs Anas.Mgs
-@carolinemathius
-carolinemathius
-@Thibaut-Longchamps
-Thibaut-Longchamps Thibaut Longchamps
-Languages
-Python
-88.2%
- 
-Dockerfile
-11.8%
-Suggested workflows
-Based on your tech stack
-SLSA Generic generator logo
-SLSA Generic generator
-Generate SLSA3 provenance for your existing release workflows
-Python Package using Anaconda logo
-Python Package using Anaconda
-Create and test a Python package on multiple Python versions using Anaconda for package management.
-Django logo
-Django
-Build and Test a Django Project
-More workflows
-Footer
-© 2024 GitHub, Inc.
