@@ -15,14 +15,15 @@ This project addresses two business needs:
 ---
 
 # Create and activate virtual environment
+```bash
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
-
+```
 # Install common dependencies (edit as needed)
+```bash
 pip install -r api/requirements.txt
-pip install -r training/requirements.txt
 pip install -r ml_flow/requirements.txt
-
+```
 ---
 
 ## 🧠 Machine Learning Model
@@ -251,5 +252,6 @@ According to this data, it is not necessary to set a maximum period between rent
 **Thibaut Longchamps**  
 🔗 [GitHub](https://github.com/Thibaut-Longchamps)
 EOF
+
 
 
