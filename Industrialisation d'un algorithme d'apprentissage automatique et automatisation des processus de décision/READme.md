@@ -1,121 +1,241 @@
+# 🚗 Getaround – Rental Price Optimization & Delay Management
 
-### Link Vydiard video  (video presentation of the project): 
+📺 [Video Presentation](https://secure.vidyard.com/organizations/3270029/players/m2NMusJNEmq2PmMdjNav9P?edit=true)
 
-https://secure.vidyard.com/organizations/3270029/players/m2NMusJNEmq2PmMdjNav9P?edit=true
+---
+
+## 📌 Project Overview
+
+**Getaround** is a peer-to-peer car rental platform (like Airbnb for cars).  
+This project addresses two business needs:
+
+1. **Minimizing cancellations** by finding the optimal delay between rentals.
+2. **Predicting the optimal daily rental price** using machine learning.
+
+---
+
+## 🧠 Machine Learning Model
+
+- **Best model**: `VotingRegressor` (ensemble of XGBoost + others)
+- Trained in: `notebooks/ml_model.ipynb`
+- 💾 Saved as: `ml_best_model.pkl`
+- Used by: FastAPI for real-time predictions
+
+### 🔁 To regenerate the model
+
+\`\`\`bash
+jupyter notebook notebooks/ml_model.ipynb
+\`\`\`
+
+This creates the file:
+
+\`\`\`text
+ml_best_model.pkl
+\`\`\`
+
+### 📦 Load the model manually
+
+\`\`\`python
+import pickle
+
+with open("ml_best_model.pkl", "rb") as f:
+    model = pickle.load(f)
+\`\`\`
+
+---
+
+## 🗂️ Project Structure
+
+\`\`\`
+notebooks/
+├── 01_preprocessing_delay.ipynb       # EDA - delay
+├── 02_preprocessing_pricing.ipynb     # EDA - pricing
+├── ml_model.ipynb                     # VotingRegressor training
+├── 01-Getaround_analysis.ipynb        # Summary & visuals
+
+cake_app/
+├── .streamlit/
+├── app.py                             # Streamlit dashboard
+└── clean_file_delay.csv               # Preprocessed data
+
+ml_flow/
+├── Dockerfile                         # MLflow server image
+└── requirements.txt
+
+training/
+├── clean_pricing_project.csv
+├── ml_model.py                        # Model training script
+└── requirements.txt
+
+api/
+├── app.py                             # FastAPI app
+├── Dockerfile
+└── requirements.txt
+\`\`\`
+
+---
+
+## 💻 Technologies Used
+
+- Python (scikit-learn, XGBoost, Pandas)
+- Voting Regressor
+- Docker
+- FastAPI (API)
+- Streamlit (Dashboard)
+- MLflow (Model tracking)
+- Heroku (Deployment)
+- S3 & PostgreSQL
+
+---
+
+## 🔐 Environment Variables
+
+Set these variables in your \`.env\` or Docker environment.
+
+### ✅ Example
+
+\`\`\`env
+AWS_ACCESS_KEY_ID=your_key
+AWS_SECRET_ACCESS_KEY=your_secret
+BACKEND_STORE_URI=postgresql://user:pass@host:5432/mlflow
+ARTIFACT_STORE_URI=s3://your-bucket-name/path/
+MLFLOW_TRACKING_URI=https://your-mlflow.herokuapp.com
+PORT=4000
+\`\`\`
+
+---
+
+## 🧪 Local Execution (Docker)
+
+### ▶️ 1. Streamlit Dashboard
+
+\`\`\`bash
+cd cake_app
+docker build . -t getaround_streamlit
+docker run -p 8501:80 -v "\$(pwd):/home/app" getaround_streamlit
+\`\`\`
+
+🔗 Open: http://localhost:8501  
+📂 Upload \`clean_file_delay.csv\` for visualization.
+
+---
+
+### ▶️ 2. MLflow Tracking Server
+
+\`\`\`bash
+cd ml_flow
+docker build . -t getaround_mlflow
+
+docker run -p 5000:80 -v "\$(pwd):/home/app" \
+  -e PORT=80 \
+  -e AWS_ACCESS_KEY_ID=your_key \
+  -e AWS_SECRET_ACCESS_KEY=your_secret \
+  -e BACKEND_STORE_URI=your_postgres_uri \
+  -e ARTIFACT_STORE_URI=your_s3_uri \
+  getaround_mlflow
+\`\`\`
+
+🔗 Open: http://localhost:5000
+
+---
+
+### ▶️ 3. FastAPI (Price Prediction API)
+
+\`\`\`bash
+cd api
+docker build . -t getaround_api
+
+docker run -p 4000:80 -v "\$(pwd):/home/app" \
+  -e PORT=80 \
+  -e MLFLOW_TRACKING_URI=https://your-mlflow.herokuapp.com \
+  -e AWS_ACCESS_KEY_ID=your_key \
+  -e AWS_SECRET_ACCESS_KEY=your_secret \
+  -e BACKEND_STORE_URI=your_postgres_uri \
+  -e ARTIFACT_STORE_URI=your_s3_uri \
+  getaround_api
+\`\`\`
+
+🔗 API Access: http://localhost:4000  
+📄 Docs UI: http://localhost:4000/docs
+
+---
+
+##  Example Prediction Request
+
+\`\`\`json
+POST /predict
+{
+  "model_key": "Citroën",
+  "mileage": 45000,
+  "engine_power": 110,
+  "fuel": "diesel",
+  "paint_color": "black",
+  "car_type": "sedan",
+  "private_parking_available": true,
+  "has_gps": true,
+  "has_air_conditioning": true,
+  "automatic_car": false,
+  "has_getaround_connect": true,
+  "has_speed_regulator": false,
+  "winter_tires": false
+}
+\`\`\`
+
+---
+
+## Ports & Access Table
+
+| Service   | Container Port | Host Port | Access URL                                     |
+|-----------|----------------|-----------|------------------------------------------------|
+| FastAPI   | \`80\`           | \`4000\`    | [http://localhost:4000](http://localhost:4000) |
+| MLflow    | \`80\`           | \`5000\`    | [http://localhost:5000](http://localhost:5000) |
+| Streamlit | \`80\`           | \`8501\`    | [http://localhost:8501](http://localhost:8501) |
+
+---
+
+## Deployed Apps (Heroku) 
+
+=> ⚠️ Note: The deployed applications are no longer available online
+
+| Component | Link                                                                 |
+|-----------|----------------------------------------------------------------------|
+| Streamlit | [Getaround Streamlit](https://getaroundapp-78c3d79ff9d2.herokuapp.com/)     |
+| FastAPI   | [FastAPI Docs](https://fast-api-price-optimisation-d4d8b772232c.herokuapp.com/docs) |
+| MLflow    | [MLflow UI](https://server-mlflow-d231fb5910ab.herokuapp.com/)             |
+
+---
+
+## 📁 Data Files
+
+| File                        | Description                             |
+|-----------------------------|-----------------------------------------|
+| \`clean_file_delay.csv\`      | For Streamlit visualization             |
+| \`clean_pricing_project.csv\` | For training pricing ML model           |
+| \`ml_best_model.pkl\`         | Trained VotingRegressor for FastAPI     |
+
+---
 
 
-## Welcome to this get around project: 
+## Final Recommendation
 
-Getaround is the Airbnb for cars. You can rent cars from any person for a few hours to a few days! Founded in 2009, this company has known rapid growth. In 2019, they count over 5 million users and about 20K available cars worldwide.
+Report & Recommandations:
+Only 7% of rentals are delayed which is relatively low.
 
+We can notice that most of the delays concern significant delays, ie more than one hour. It would be wise to offer a discount to customers in case of punctuality to encourage them to be on time.
 
-## Goals:
+The connect checkin_type represents only 20% of rentals, but more than 24% of cancellations. Perhaps not having to meet the next tenant in person to hand over the keys makes you less punctual.
 
-The aim of this project is to find a maximum time threshold between each rental that will enable the company to minimise its cancellations.
-The second objective is to build a machine learning algorithm to predict the optimal price for a day's rental.
+It is interesting to note that out of all the problematic delays (checkout vs time delta) only 194 lead to a cancellation, ie less than 1%.
 
-Good viewing ! :)
+It is surprising that all rental cancellations occur when the delivery of the vehicle was done on time. The people who created the dataset should be interviewed for more information about how the data was collected. (This finding may also be due to the fact that I took the decision to set the nan values ​​of the delay_at_checkout_in_minutes to 0)
 
-## Structure:
+According to this data, it is not necessary to set a maximum period between rentals in order to minimise cancellations and turnover loss.
 
-notebooks:
-- Exploratory data analysis : 01_preprocessing_delay.ipynb & 02_preprocessing_pricing.ipynb
-- model training: ml_model.ipynb
-- project description: 01-Getaround_analysis.ipynb
-
-cake_app:
-- configuration file for dashbord (color...): .streamlit 
-- script dashbord: app.py
-- clean csv: clean_file_delay.csv ( = getaround_delay_analysis.csv with preprocessing)
-- Dockerfile
-- depencies: requirements.txt
-
-ml_flow:
-- image: Dockerfile
-- Depencies: requirements.txt
-
-training:
-- clean data for machine learning: clean_pricing_project.csv
-- image: Dockerfile
-- Depencies: requirements.txt
-- Machine learning script with best model (XGBOOST Gridsearch): ml_model.py
-
-api:
-/docker
-- image: Dockerfile
-- Depencies: requirements.txt
-- script FastAPI: app.py
-
-data: csv data
+---
 
 
+## 👤 Author
 
-
-## LOCAL SERVER
------------------------------------------------------------------------------------
-
-streamlit:  run this command in the terminal (/cake_app)
-When you connect please upload and submit the file 'clean_file_delay.csv' in cake_app repository for visualization
-
-# create image
-docker build . -t my_getaround_image      
-
-# run contener
-docker run -it -v "$(pwd):/home/app" -e PORT=80 -p "4000:80" <YOUR_IMAGE_NAME>     
-
-# port mapping (in the contener bash)
-streamlit run --server.port 80 --server.address 0.0.0.0 app.py    
-
-# Open local server
-localhost:80 (windows)
-0.0.0.0:80 (mac, linux)
-
------------------------------------------------------------------------------------------
-
-mlflow server:  run this command in the terminal (/ml_flow)
-
-# create image
-docker build . -t <YOUR_IMAGE_NAME>
-
-# define environment variables, port mapping and run contener
-docker run -it -p 4000:80 -v "$(pwd):/home/app" -e PORT=80 -e AWS_ACCESS_KEY_ID=<YOUR_AWS_ACCESS_KEY_ID> -e AWS_SECRET_ACCESS_KEY=<YOUR_AWS_SECRET_ACESS_KEY> -e BACKEND_STORE_URI=nothing -e ARTIFACT_STORE_URI=<YOUR_ARTEFACT_STORE_URI> <YOUR_IMAGE_NAME>
-
-# Open local server
-localhost:80 (windows)
-0.0.0.0:80 (mac, linux)
-
-----------------------------------------------------------------------------------------------
-
-fast api:    run this command in the terminal (/api)
-
-# create image
-docker build . -t <YOUR_IMAGE_NAME>
-
-# run contener, port mapping & set environment variables
-docker run -it -v "$(pwd):/home/app" -p 4000:4000 -e PORT=4000 -e MLFLOW_TRACKING_URI=<YOUR_MLFLOW_TRACKING_URI> -e AWS_ACCESS_KEY_ID=<YOUR_AWS_ACCESS_KEY_ID> -e AWS_SECRET_ACCESS_KEY=<YOUR_AWS_SECRET_ACCESS_KEY> -e BACKEND_STORE_URI=<YOUR_BACKEND8STORE_URI> -e ARTIFACT_STORE_URI=<YOUR_ARTIFACT_STORE_URI> <YOUR_IMAGE_NAME>
-
-# Open local server
-localhost:4000 (windows)
-0.0.0.0:4000 (mac, linux)
-
-
-If you want to push these app on heroku please do not forget set up environment variables on heroku.
-
-----------------------------------------------------------------------------------------------------
-
-## APP WEB LINK :
-
-# fast-api-price-optimisation: https://fast-api-price-optimisation-d4d8b772232c.herokuapp.com/docs
-end point: /docs (documentation)
-           /predict (predictions for one sample)
-
-# mlflow server: https://server-mlflow-d231fb5910ab.herokuapp.com/
-The best model is silent-gull-319: getaround_price_optimization (model: getaround_xgbg_best_test)
-
-# streamlit dashbord: https://getaroundapp-78c3d79ff9d2.herokuapp.com/
-When you connect please upload and submit the file 'clean_file_delay.csv' in cake_app repository for visualization
-
-
-technology used for structure:
-
-Docker / FastAPI / Streamlit / MLflow / Heroku / S3 / POSTGRESQL
+**Thibaut Longchamps**  
+🔗 [GitHub](https://github.com/Thibaut-Longchamps)
+EOF
