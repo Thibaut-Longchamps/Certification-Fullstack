@@ -4,7 +4,7 @@
 
 ---
 
-## 📌 Project Overview
+## Project Overview
 
 **Getaround** is a peer-to-peer car rental platform (like Airbnb for cars).  
 This project addresses two business needs:
@@ -33,7 +33,7 @@ pip install -r ml_flow/requirements.txt
 - 💾 Saved as: `ml_best_model.pkl`
 - Used by: FastAPI for real-time predictions
 
-### 🔁 To regenerate the model
+### To regenerate the model
 
 ```bash
 jupyter notebook notebooks/ml_model.ipynb
@@ -45,7 +45,7 @@ This creates the file:
 ml_best_model.pkl
 ```
 
-### 📦 Load the model manually
+### Load the model manually
 
 ```python
 import pickle
@@ -105,7 +105,7 @@ api/
 
 Set these variables in your \`.env\` or Docker environment.
 
-### ✅ Example
+### Example
 
 ```env
 AWS_ACCESS_KEY_ID=your_key
@@ -118,7 +118,7 @@ PORT=4000
 
 ---
 
-## 🧪 Local Execution (Docker)
+## Local Execution (Docker)
 
 ### ▶️ 1. Streamlit Dashboard
 
@@ -247,11 +247,11 @@ According to this data, it is not necessary to set a maximum period between rent
 ---
 
 
-## 👤 Author
+## Author
 
 **Thibaut Longchamps**  
 🔗 [GitHub](https://github.com/Thibaut-Longchamps)
-EOF
+
 
 
 
