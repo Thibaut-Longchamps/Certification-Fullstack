@@ -1,9 +1,5 @@
 # 🚗 Getaround – Rental Price Optimization & Delay Management
 
-📺 [Video Presentation](https://secure.vidyard.com/organizations/3270029/players/m2NMusJNEmq2PmMdjNav9P?edit=true)
-
----
-
 ## Project Overview
 
 **Getaround** is a peer-to-peer car rental platform (like Airbnb for cars).  
@@ -251,6 +247,7 @@ According to this data, it is not necessary to set a maximum period between rent
 
 **Thibaut Longchamps**  
 🔗 [GitHub](https://github.com/Thibaut-Longchamps)
+
 
 
 
